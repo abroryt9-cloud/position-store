@@ -23,10 +23,10 @@ def index():
 @app.route('/catalog')
 def catalog():
     category = request.args.get('category', 'all')
-    if category == 'all':
-        products = Product.query.all()
-    else:
-        products = Product.query.filter_by(category=category).all()
+        if category == 'all':
+            products = Product.query.all()
+        else:
+            products = Product.query.filter_by(category=category).all()
     return render_template('catalog.html', products=products, current_category=category)
 
 @app.route('/product/<slug>')
@@ -147,4 +147,5 @@ def create_card_payment():
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()
+
     app.run(debug=True)
