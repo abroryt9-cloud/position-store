@@ -23,7 +23,7 @@ def index():
 @app.route('/catalog')
 def catalog():
     category = request.args.get('category', 'all')
-        @app.route('/catalog')
+    @app.route('/catalog')
 def catalog():
     category = request.args.get('category', 'all')
     if category == 'all':
@@ -156,4 +156,5 @@ if __name__ == '__main__':
         db.create_all()
 
     app.run(debug=True)
+
 
