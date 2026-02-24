@@ -23,7 +23,14 @@ def index():
 @app.route('/catalog')
 def catalog():
     category = request.args.get('category', 'all')
-        if category == 'all':
+        @app.route('/catalog')
+def catalog():
+    category = request.args.get('category', 'all')
+    if category == 'all':
+        products = Product.query.all()
+    else:
+        products = Product.query.filter_by(category=category).all()
+    return render_template('catalog.html', products=products, current_category=category)
             products = Product.query.all()
         else:
             products = Product.query.filter_by(category=category).all()
@@ -149,3 +156,4 @@ if __name__ == '__main__':
         db.create_all()
 
     app.run(debug=True)
+
