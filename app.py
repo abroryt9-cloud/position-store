@@ -23,17 +23,10 @@ def index():
 @app.route('/catalog')
 def catalog():
     category = request.args.get('category', 'all')
-    @app.route('/catalog')
-def catalog():
-    category = request.args.get('category', 'all')
     if category == 'all':
         products = Product.query.all()
     else:
         products = Product.query.filter_by(category=category).all()
-    return render_template('catalog.html', products=products, current_category=category)
-            products = Product.query.all()
-        else:
-            products = Product.query.filter_by(category=category).all()
     return render_template('catalog.html', products=products, current_category=category)
 
 @app.route('/product/<slug>')
@@ -137,7 +130,7 @@ def create_crypto_payment():
     product = Product.query.get(data['product_id'])
     return jsonify({
         'success': True,
-        'address': app.config.get('NOWPAYMENTS_WALLET', 'Твой_кошелёк_Phantom'),
+        'address': 'ТВОЙ_АДРЕС_PHANTOM',
         'amount': product.price_usd,
         'currency': 'USDT'
     })
@@ -151,10 +144,13 @@ def create_card_payment():
         'checkout_url': f'https://crossmint.com/checkout/{product.id}'
     })
 
+@app.route('/init-db')
+def init_db():
+    with app.app_context():
+        db.create_all()
+        return '✅ База данных создана! Эту страницу можно удалить.'
+
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()
-
     app.run(debug=True)
-
-
